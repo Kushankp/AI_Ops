@@ -15,7 +15,7 @@ app.include_router(upload.router)
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change to frontend URL in prod
+    allow_origins="https://ai-ops.pages.dev/",  # Change to frontend URL in prod
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

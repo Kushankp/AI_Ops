@@ -11,7 +11,7 @@ function ChatWindow() {
 
     setLoading(true)
     try {
-      const res = await axios.post("http://localhost:8000/chat", { message })
+      const res = await axios.post("https://ai-ops.onrender.com/chat", { message })
       setResponse(res.data.reply)
     } catch (err) {
       console.error("Error:", err)
