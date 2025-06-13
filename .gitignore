@@ -1,0 +1,44 @@
+# === Node / React (frontend) ===
+frontend/node_modules/
+frontend/.env
+frontend/dist/
+frontend/.next/
+frontend/.turbo/
+frontend/.vite/
+frontend/build/
+frontend/yarn.lock
+frontend/package-lock.json
+
+# === Python (backend) ===
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+backend/.env
+backend/.mypy_cache/
+backend/.pytest_cache/
+backend/.DS_Store
+backend/.idea/
+backend/.vscode/
+
+# === Docker-related ===
+*.log
+docker-compose.override.yml
+
+# === System ===
+*.swp
+*.swo
+*.bak
+*.tmp
+Thumbs.db
+.DS_Store
+
+# === VSCode / IDEs ===
+.vscode/
+.idea/
+*.code-workspace
+
+# === Ollama Cache (optional) ===
+~/.ollama/
+
+.env
