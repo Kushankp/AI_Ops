@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile
 from langchain_community.document_loaders import PyPDFLoader
-from utils.embeddings import vectorstore
+from utils.embeddings import get_vectorstore  # ✅ FUNCTION not global
 import os
 import tempfile
 
@@ -17,8 +17,10 @@ async def upload_pdf(file: UploadFile):
         loader = PyPDFLoader(tmp_path)
         documents = loader.load()
 
-        # Add to Pinecone via LangChain vectorstore
+        # ✅ Get vectorstore dynamically to reduce startup memory
+        vectorstore = get_vectorstore()
         vectorstore.add_documents(documents)
+
         return {"message": "File uploaded and indexed successfully"}
 
     finally:
