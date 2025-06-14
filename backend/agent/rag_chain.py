@@ -7,7 +7,7 @@ def get_context_for_query(query: str) -> str:
     vectorstore = get_vectorstore()
     
     # Set number of documents to retrieve
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 10})  # increase from default 4
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 2})  # decrease from default 4
 
     # Retrieve documents
     docs = retriever.get_relevant_documents(query)
