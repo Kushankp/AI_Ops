@@ -11,7 +11,7 @@ function ChatWindow() {
 
     setLoading(true)
     try {
-      const res = await axios.post("https://c92a5e29-ef5c-4e14-b72f-7fc2b227cc1b-00-3mc63l854b256.pike.replit.dev/chat", { message })
+      const res = await axios.post("https://ai-ops-561749935054.europe-west1.run.app/chat", { message })
       setResponse(res.data.reply)
     } catch (err) {
       console.error("Error:", err)

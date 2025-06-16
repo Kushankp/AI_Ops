@@ -20,7 +20,7 @@ function FileUploader() {
     formData.append("file", file)
 
     try {
-      const res = await axios.post("https://c92a5e29-ef5c-4e14-b72f-7fc2b227cc1b-00-3mc63l854b256.pike.replit.dev/upload", formData, {
+      const res = await axios.post("https://ai-ops-561749935054.europe-west1.run.app/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       })
       setStatus(res.data.message)
