@@ -8,14 +8,18 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy your source code
+# Copy the entire app source code
 COPY . .
 
-# Expose port (Cloud Run will override it with $PORT)
+# Copy the locally downloaded embedding model into /app/models
+# (Make sure this directory exists and has the model in it!)
+COPY ./models /app/models
+
+# Expose port (Cloud Run will override this with $PORT)
 EXPOSE 8080
 
-# Set environment variable fallback
+# Set fallback environment variable for PORT
 ENV PORT 8080
 
-# Run the FastAPI app using uvicorn
+# Start the FastAPI app using uvicorn
 CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8080"]

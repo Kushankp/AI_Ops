@@ -23,9 +23,8 @@ def get_vectorstore():
     """
     # ✅ Load embedding model from local folder
     embedding_model = HuggingFaceEmbeddings(
-        model_name="./models/all-MiniLM-L6-v2"  # Ensure this path exists in your deployment
+    model_name="/app/models/all-MiniLM-L6-v2"  # This path will match what you copy in Docker
     )
-
     # Initialize Pinecone client and connect to index
     pc = Pinecone(api_key=PINECONE_API_KEY)
 
