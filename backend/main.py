@@ -4,14 +4,11 @@ from routes import upload
 from pydantic import BaseModel
 import requests
 import os
-from dotenv import load_dotenv
-from agent.rag_chain import get_context_for_query  # make sure path is correct
-
-
-load_dotenv()  # Load env variables
+from agent.rag_chain import get_context_for_query  # Make sure path is correct
 
 app = FastAPI()
 app.include_router(upload.router)
+
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
@@ -67,6 +64,8 @@ Now answer the question: {request.message}
         response = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data)
         result = response.json()
         reply = result["choices"][0]["message"]["content"]
+
         return {"reply": reply}
     except Exception as e:
+        print("❌ Error during chat:", e)
         return {"error": str(e)}
