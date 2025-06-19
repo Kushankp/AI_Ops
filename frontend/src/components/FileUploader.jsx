@@ -20,7 +20,7 @@ function FileUploader() {
     formData.append("file", file)
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/upload", formData, {
+      const res = await axios.post("https://ai-ops-561749935054.europe-west1.run.app/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       })
       setStatus(res.data.message)
