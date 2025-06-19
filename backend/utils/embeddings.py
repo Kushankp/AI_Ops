@@ -22,9 +22,8 @@ def get_vectorstore():
     using a locally stored Hugging Face embedding model.
     """
     # ✅ Load embedding model from local folder
-    embedding_model = HuggingFaceEmbeddings(
-    model_name="/app/models/all-MiniLM-L6-v2"  # This path will match what you copy in Docker
-    )
+    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
     # Initialize Pinecone client and connect to index
     pc = Pinecone(api_key=PINECONE_API_KEY)
 

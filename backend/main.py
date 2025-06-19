@@ -12,7 +12,7 @@ app.include_router(upload.router)
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://ai-ops.pages.dev"],  # Ensure it's a list
+    allow_origins=["http://localhost:5173"],  # Frontend origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,18 +29,28 @@ def root():
 @app.post("/chat")
 async def chat(request: ChatRequest):
     try:
+        # 🔍 Step 1: Get relevant context using RAG
         context = get_context_for_query(request.message)
 
-        prompt = f"""
-You are an assistant helping the user based on the following context:
+        # 🔁 Step 2: Build prompt
+        if context.strip():
+            prompt = f"""
+You are an intelligent assistant. If the provided context is useful, use it to answer the question. Otherwise, answer from your own knowledge.
 
 --- Context ---
 {context}
 ----------------
 
-Now answer the question: {request.message}
+User Question: {request.message}
+"""
+        else:
+            prompt = f"""
+You are an intelligent assistant. Answer the following question based on your knowledge:
+
+User Question: {request.message}
 """
 
+        # 🔐 Step 3: Call Groq API
         GROQ_API_KEY = os.getenv("GROQ_API_KEY")
         headers = {
             "Authorization": f"Bearer {GROQ_API_KEY}",
@@ -50,18 +60,22 @@ Now answer the question: {request.message}
         data = {
             "model": "llama3-70b-8192",
             "messages": [
-                {"role": "system", "content": "Only answer based on the context provided. Be precise."},
+                {"role": "system", "content": "Be helpful, accurate, and detailed."},
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.7
         }
 
-        response = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data)
-        result = response.json()
+        response = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers=headers,
+            json=data
+        )
 
-        # Log full response for debugging
+        result = response.json()
         print("🔁 Groq Response:", result)
 
+        # 🧠 Step 4: Return LLM answer
         if "choices" in result:
             reply = result["choices"][0]["message"]["content"]
             return {"reply": reply}
