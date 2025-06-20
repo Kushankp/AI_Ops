@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import '../App.css'
 
 function FileUploader() {
   const [file, setFile] = useState(null)
